@@ -1,6 +1,6 @@
 // Adoorn Mailbox Number Positioning Frame (Split for Bambu P1S)
 // Raised Border Version – 2-piece print for smaller bed
-// Includes printable notches instead of floating alignment tabs
+// Flat-printable notches for alignment (top + bottom)
 // Export partA() and partB() separately to STL
 
 inch = 25.4;  // convert inches to mm
@@ -18,16 +18,19 @@ frame_length = rear_offset;
 
 split_pos = frame_length / 2;  // divide into two equal parts
 
-notch_width = 0.25 * inch;     // width of notch
-notch_depth = 0.125 * inch;    // depth into the edge
-notch_height = 0.25 * inch;    // height of notch area (tall enough to align easily)
+// Notch specs
+notch_width = 0.25 * inch;     // horizontal thickness of notch
+notch_depth = 0.125 * inch;    // how far it overlaps
+notch_height = 0.25 * inch;    // vertical size of notch
 
+//---------------------------------------------
 // --- Base Frame Shape (with cutouts) ---
+//---------------------------------------------
 module full_frame() {
     difference() {
         cube([frame_length, frame_height, frame_thickness]);
         
-        // Cutouts for numbers
+        // Number cutouts
         translate([1.0 * inch, bottom_offset, 0])
             cube([num_width, num_height, frame_thickness + 1]);
         translate([1.0 * inch + num_width + spacing, bottom_offset, 0])
@@ -47,7 +50,9 @@ module full_frame() {
         cube([frame_length, 0.75 * inch, frame_thickness]);
 }
 
-// --- Part A (rear half, includes notch cutouts) ---
+//---------------------------------------------
+// --- Part A (rear half with female notches) ---
+//---------------------------------------------
 module partA() {
     difference() {
         intersection() {
@@ -55,33 +60,40 @@ module partA() {
             cube([split_pos, frame_height, frame_thickness + 1]);
         }
 
-        // Top notch (female cutout)
+        // Top notch (female)
         translate([split_pos - notch_depth, frame_height - notch_height, 0])
             cube([notch_depth, notch_height, frame_thickness + 1]);
-        // Bottom notch (female cutout)
+
+        // Bottom notch (female)
         translate([split_pos - notch_depth, 0, 0])
             cube([notch_depth, notch_height, frame_thickness + 1]);
     }
 }
 
-// --- Part B (front half, includes notch protrusions) ---
+//---------------------------------------------
+// --- Part B (front half with male bumps) ---
+//---------------------------------------------
 module partB() {
     union() {
+        // Base section (front half)
         intersection() {
             full_frame();
             translate([split_pos, 0, 0])
                 cube([frame_length, frame_height, frame_thickness + 1]);
         }
 
-        // Top notch (male bump)
-        translate([split_pos, frame_height - notch_height, 0])
+        // Top notch bump (male)
+        translate([split_pos - notch_depth, frame_height - notch_height, 0])
             cube([notch_depth, notch_height, frame_thickness]);
-        // Bottom notch (male bump)
-        translate([split_pos, 0, 0])
+
+        // Bottom notch bump (male)
+        translate([split_pos - notch_depth, 0, 0])
             cube([notch_depth, notch_height, frame_thickness]);
     }
 }
 
-// Uncomment one of the following to export:
-partA();
-//partB();
+//---------------------------------------------
+// Uncomment to export one at a time
+//---------------------------------------------
+//partA();
+partB();

@@ -7,13 +7,15 @@ inch = 25.4;  // convert inches to mm
 
 // Dimensions
 num_height = 4 * inch;
-num_width = 2.8125 * inch;
+num_width = 2.875 * inch;
 spacing = 0.75 * inch;
 rear_offset = 17.3125 * inch;
 bottom_offset = 0.75 * inch;
+// make the top and bottom the same size
+top_offset = bottom_offset;
 
-frame_thickness = 0.25 * inch;
-frame_height = num_height + bottom_offset + 0.5 * inch;
+frame_thickness = 0.15 * inch;
+frame_height = bottom_offset + num_height + top_offset;
 frame_length = rear_offset;
 
 split_pos = frame_length / 2;  // divide into two equal parts
@@ -95,5 +97,5 @@ module partB() {
 //---------------------------------------------
 // Uncomment to export one at a time
 //---------------------------------------------
-//partA();
-partB();
+partA();
+//partB();

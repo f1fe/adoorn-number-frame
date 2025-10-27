@@ -2,6 +2,9 @@
 
 A parametric OpenSCAD design for a mailbox number positioning frame, specifically for https://www.adoorn.com/products/post-mount-mailbox. This project creates a template frame that helps position four individual house numbers (e.g., adhesive digits) at precise locations on a mailbox or other surface.
 
+![IMG_1097](https://github.com/user-attachments/assets/3bdcb04a-e62b-4782-8fd8-81edc7da89b1)
+
+
 ## Overview
 
 The code generates a positioning frame with:
